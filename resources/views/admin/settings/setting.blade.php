@@ -29,40 +29,40 @@
                         @csrf
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="name" class="form-control" value="{{ $settings->name or null }}">
+                                <input type="text" name="name" class="form-control" value="{{old('name', $settings->name)}} ">
                                 <label class="form-label">Site Title</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="email" name="email" class="form-control" value="{{ $settings->email or null }}">
+                                <input type="email" name="email" class="form-control" value="{{ old('email', $settings->email)}}">
                                 <label class="form-label">Email</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="number" name="phone" class="form-control" value="{{ $settings->phone or null }}">
+                                <input type="number" name="phone" class="form-control" value="{{ old('phone', $settings->phone)}}">
                                 <label class="form-label">Phone</label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="address" class="form-control" value="{{ $settings->address or null }}">
+                                <input type="text" name="address" class="form-control" value="{{ old('address',$settings->address)}}">
                                 <label class="form-label">Address</label>
                             </div>
                             <small class="col-red font-italic">HTML Tag allowed</small>
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="footer" class="form-control" value="{{ $settings->footer or null }}">
+                                <input type="text" name="footer" class="form-control" value="{{ old('footer',$settings->footer)}}">
                                 <label class="form-label">Footer</label>
                             </div>
                         </div>
 
                         <div class="form-group">
                             <div class="form-line">
-                                <textarea name="aboutus" rows="4" class="form-control no-resize">{{ $settings->aboutus or null }}</textarea>
+                                <textarea name="aboutus" rows="4" class="form-control no-resize">{{ old('aboutus',$settings->aboutus)}}</textarea>
                                 <label class="form-label">About Us</label>
                             </div>
                         </div>
@@ -70,19 +70,19 @@
                         <h6>Social Links</h6>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="facebook" class="form-control" value="{{ $settings->facebook or null }}">
+                                <input type="text" name="facebook" class="form-control" value="{{ old('facebook',$settings->facebook)}}">
                                 <label class="form-label">Facebook Handler</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="twitter" class="form-control" value="{{ $settings->twitter or null }}">
+                                <input type="text" name="twitter" class="form-control" value="{{ old('twitter',$settings->twitter)}}">
                                 <label class="form-label">Twitter Handler</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="form-line">
-                                <input type="text" name="linkedin" class="form-control" value="{{ $settings->linkedin or null }}">
+                                <input type="text" name="linkedin" class="form-control" value="{{ old('linkedin',$settings->linkedin)}}">
                                 <label class="form-label">LinkedIn Handler</label>
                             </div>
                         </div>

@@ -25,43 +25,43 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">title</i>
-                                    <input id="title" name="title" type="text" class="validate" data-length="200">
+                                    <input id="title" name="title" type="text" class="validate" data-length="200" value="{{ old('title')}}">
                                     <label for="title">Title</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">monetization_on</i>
-                                    <input id="price" name="price" type="number" class="validate">
+                                    <input id="price" name="price" type="number" class="validate" value="{{ old('price')}}">
                                     <label for="price">Price</label>
                                 </div>
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">business</i>
-                                    <input id="area" name="area" type="number" class="validate">
+                                    <input id="area" name="area" type="number" class="validate" value="{{ old('area')}}">
                                     <label for="area">Floor Area</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">airline_seat_flat</i>
-                                    <input id="bedroom" name="bedroom" type="number" class="validate">
+                                    <input id="bedroom" name="bedroom" type="text" class="validate" value="{{ old('bedroom')}}">
                                     <label for="bedroom">Bedroom</label>
                                 </div>
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">event_seat</i>
-                                    <input id="bathroom" name="bathroom" type="number" class="validate">
+                                    <input id="bathroom" name="bathroom" type="number" class="validate" value="{{ old('bathroom')}}">
                                     <label for="bathroom">Bathroom</label>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="input-field col s4">
                                     <i class="material-icons prefix">location_city</i>
-                                    <input id="city" name="city" type="text" class="validate">
+                                    <input id="city" name="city" type="text" class="validate" value="{{ old('city')}}">
                                     <label for="city">City</label>
                                 </div>
                                 <div class="input-field col s8">
                                     <i class="material-icons prefix">account_balance</i>
-                                    <textarea id="address" name="address" class="materialize-textarea"></textarea>
+                                    <textarea id="address" name="address" class="materialize-textarea">{{ old('address')}}</textarea>
                                     <label for="address">Address</label>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@
                                 </div>
                                 <div class="input-field col s9">
                                     <i class="material-icons prefix">mode_edit</i>
-                                    <textarea id="description" name="description" class="materialize-textarea"></textarea>
+                                    <textarea id="description" name="description" class="materialize-textarea"> {{ old('description')}}</textarea>
                                     <label for="description">Description</label>
                                 </div>
                             </div>
@@ -138,12 +138,12 @@
                             <div class="row">
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">map</i>
-                                    <input id="location_latitude" name="location_latitude" type="text" class="validate">
+                                    <input id="location_latitude" name="location_latitude" type="text" class="validate" value="{{ old('location_latitude')}}">
                                     <label for="location_latitude">Latitude</label>
                                 </div>
                                 <div class="input-field col s6">
                                     <i class="material-icons prefix">map</i>
-                                    <input id="location_longitude" name="location_longitude" type="text" class="validate">
+                                    <input id="location_longitude" name="location_longitude" type="text" class="validate" value="{{ old('location_longitude')}}">
                                     <label for="location_longitude">Longitude</label>
                                 </div>
                             </div>
@@ -151,7 +151,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">voice_chat</i>
-                                    <input id="video" name="video" type="text" class="validate">
+                                    <input id="video" name="video" type="text" class="validate" value="{{ old('video')}}">
                                     <label for="video">Youtube Link</label>
                                 </div>
                             </div>
@@ -171,7 +171,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <i class="material-icons prefix">place</i>
-                                    <textarea id="nearby" name="nearby" class="materialize-textarea"></textarea>
+                                    <textarea id="nearby" name="nearby" class="materialize-textarea"> {{ old('nearby')}}</textarea>
                                     <label for="nearby">Nearby</label>
                                 </div>
                             </div>

@@ -46,7 +46,6 @@ class DashboardController extends Controller
     public function settings()
     {
         $settings = Setting::first();
-
         return view('admin.settings.setting',compact('settings'));
     }
 
@@ -60,9 +59,9 @@ class DashboardController extends Controller
             'address'   => 'required',
             'footer'    => 'required',
             'aboutus'   => 'required',
-            'facebook'  => 'required|url',
-            'twitter'   => 'required|url',
-            'linkedin'  => 'required|url',
+            'facebook'  => 'url',
+            'twitter'   => 'url',
+            'linkedin'  => 'url',
         ]);
 
         Setting::updateOrCreate(
