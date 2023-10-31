@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\Facades\Image; // Import the Image facade
 use App\Category;
 use Carbon\Carbon;
 use Toastr;
@@ -44,14 +44,14 @@ class CategoryController extends Controller
             if(!Storage::disk('public')->exists('category/slider')){
                 Storage::disk('public')->makeDirectory('category/slider');
             }
-            $slider = Image::make($image)->resize(1600, 480)->save();
-            Storage::disk('public')->put('category/slider/'.$imagename, $slider);
+            $slider = Image::make($image)->resize(1600, 480); // Remove the ->save()
+            $slider->save(public_path('storage/category/slider/' . $imagename)); // Save the image in a supported format
 
             if(!Storage::disk('public')->exists('category/thumb')){
                 Storage::disk('public')->makeDirectory('category/thumb');
             }
-            $thumb = Image::make($image)->resize(500, 330)->save();
-            Storage::disk('public')->put('category/thumb/'.$imagename, $thumb);
+            $thumb = Image::make($image)->resize(500, 330); // Remove the ->save()
+            $thumb->save(public_path('storage/category/thumb/' . $imagename)); // Save the image in a supported format
         }else{
             $imagename = 'default.png';
         }
@@ -62,7 +62,7 @@ class CategoryController extends Controller
         $category->image = $imagename;
         $category->save();
 
-        Toastr::success('message', 'Category created successfully.');
+        Toastr::success('Category created successfully.');
         return redirect()->route('admin.categories.index');
     }
 

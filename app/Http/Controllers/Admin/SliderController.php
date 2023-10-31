@@ -29,35 +29,35 @@ class SliderController extends Controller
     {
         $request->validate([
             'title' => 'required|unique:sliders|max:255',
-            'image' => 'required|mimes:jpeg,jpg,png'
+            'image' => 'required|image|mimes:jpeg,jpg,png'
         ]);
 
         $image = $request->file('image');
-        $slug  = str_slug($request->title);
-
-        if(isset($image)){
-            $currentDate = Carbon::now()->toDateString();
-            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-
-            if(!Storage::disk('public')->exists('slider')){
-                Storage::disk('public')->makeDirectory('slider');
-            }
-            $slider = Image::make($image)->resize(1600, 480)->save();
-            Storage::disk('public')->put('slider/'.$imagename, $slider);
-        }else{
-            $imagename = 'default.png';
-        }
+        $slug = str_slug($request->title);
+        $currentDate = Carbon::now()->toDateString();
+        $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
         $slider = new Slider();
         $slider->title = $request->title;
         $slider->description = $request->description;
-        $slider->image = $imagename;
+
+        if ($image) {
+            if (!Storage::disk('public')->exists('slider')) {
+                Storage::disk('public')->makeDirectory('slider');
+            }
+
+            $image = Image::make($image)->resize(1600, 480);
+            $slider->image = $imagename;
+            $image->save(public_path('storage/slider/' . $imagename));
+        } else {
+            $slider->image = 'default.png';
+        }
+
         $slider->save();
 
-        Toastr::success('message', 'Slider created successfully.');
+        Toastr::success('Slider created successfully.', 'Success');
         return redirect()->route('admin.sliders.index');
     }
-
 
     public function edit($id)
     {
@@ -66,54 +66,53 @@ class SliderController extends Controller
         return view('admin.sliders.edit', compact('slider'));
     }
 
-
     public function update(Request $request, $id)
     {
         $request->validate([
             'title' => 'required|max:255',
-            'image' => 'mimes:jpeg,jpg,png'
+            'image' => 'image|mimes:jpeg,jpg,png'
         ]);
 
-        $image = $request->file('image'); 
-        $slug  = str_slug($request->title);
         $slider = Slider::find($id);
+        $slug = str_slug($request->title);
 
-        if(isset($image)){
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $currentDate = Carbon::now()->toDateString();
-            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
-            if(!Storage::disk('public')->exists('slider')){
+            $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+
+            if (!Storage::disk('public')->exists('slider')) {
                 Storage::disk('public')->makeDirectory('slider');
             }
-            if(Storage::disk('public')->exists('slider/'.$slider->image)){
-                Storage::disk('public')->delete('slider/'.$slider->image);
+
+            if (Storage::disk('public')->exists('slider/' . $slider->image)) {
+                Storage::disk('public')->delete('slider/' . $slider->image);
             }
-            $sliderimg = Image::make($image)->resize(1600, 480)->save();
-            Storage::disk('public')->put('slider/'.$imagename, $sliderimg);
-        }else{
-            $imagename = $slider->image;
+
+            $image = Image::make($image)->resize(1600, 480);
+            $slider->image = $imagename;
+            $image->save(public_path('storage/slider/' . $imagename));
         }
 
         $slider->title = $request->title;
         $slider->description = $request->description;
-        $slider->image = $imagename;
         $slider->save();
 
-        Toastr::success('message', 'Slider updated successfully.');
+        Toastr::success('Slider updated successfully.', 'Success');
         return redirect()->route('admin.sliders.index');
     }
-
 
     public function destroy($id)
     {
         $slider = Slider::find($id);
 
-        if(Storage::disk('public')->exists('slider/'.$slider->image)){
-            Storage::disk('public')->delete('slider/'.$slider->image);
+        if (Storage::disk('public')->exists('slider/' . $slider->image)) {
+            Storage::disk('public')->delete('slider/' . $slider->image);
         }
 
         $slider->delete();
 
-        Toastr::success('message', 'Slider deleted successfully.');
+        Toastr::success('Slider deleted successfully.', 'Success');
         return back();
     }
 }

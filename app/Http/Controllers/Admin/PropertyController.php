@@ -114,25 +114,25 @@ class PropertyController extends Controller
 
 
         $gallary = $request->file('gallaryimage');
+if ($gallary) {
+    foreach ($gallary as $images) {
+        if (isset($images)) {
+            $currentDate = Carbon::now()->toDateString();
+            $galimage['name'] = 'gallary-' . $currentDate . '-' . uniqid() . '.' . $images->getClientOriginalExtension();
+            $galimage['size'] = $images->getSize(); // Use getSize() instead of getClientSize()
+            $galimage['property_id'] = $property->id;
 
-        if($gallary)
-        {
-            foreach($gallary as $images)
-            {
-                $currentDate = Carbon::now()->toDateString();
-                $galimage['name'] = 'gallary-'.$currentDate.'-'.uniqid().'.'.$images->getClientOriginalExtension();
-                $galimage['size'] = $images->getClientSize();
-                $galimage['property_id'] = $property->id;
-                
-                if(!Storage::disk('public')->exists('property/gallery')){
-                    Storage::disk('public')->makeDirectory('property/gallery');
-                }
-                $propertyimage = Image::make($images)->stream();
-                Storage::disk('public')->put('property/gallery/'.$galimage['name'], $propertyimage);
-
-                $property->gallery()->create($galimage);
+            if (!Storage::disk('public')->exists('property/gallery')) {
+                Storage::disk('public')->makeDirectory('property/gallery');
             }
+            $propertyimage = Image::make($images)->stream();
+            Storage::disk('public')->put('property/gallery/' . $galimage['name'], $propertyimage);
+
+            $property->gallery()->create($galimage);
         }
+    }
+}
+
 
         Toastr::success('message', 'Property created successfully.');
         return redirect()->route('admin.properties.index');

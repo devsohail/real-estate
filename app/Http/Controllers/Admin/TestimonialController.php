@@ -4,9 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-
 use Illuminate\Support\Facades\Storage;
-use Intervention\Image\Facades\Image;
+use Intervention\Image\ImageManagerStatic as Image;
 use App\Testimonial;
 use Carbon\Carbon;
 use Toastr;
@@ -34,19 +33,17 @@ class TestimonialController extends Controller
         ]);
 
         $image = $request->file('image');
-        $slug  = str_slug($request->name);
+        $slug = str_slug($request->name);
 
-        if(isset($image)){
+        $imagename = 'default.png';
+
+        if ($image) {
             $currentDate = Carbon::now()->toDateString();
-            $imagename = $slug.'-'.$currentDate.'-'.uniqid().'.'.$image->getClientOriginalExtension();
+            $imagename = $slug . '-' . $currentDate . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-            if(!Storage::disk('public')->exists('testimonial')){
-                Storage::disk('public')->makeDirectory('testimonial');
-            }
-            $testimonial = Image::make($image)->resize(160, 160)->save();
-            Storage::disk('public')->put('testimonial/'.$imagename, $testimonial);
-        }else{
-            $imagename = 'default.png';
+            // Resize and save the image
+            $image = Image::make($image)->resize(160, 160)->encode('jpg');
+            Storage::disk('public')->put('testimonial/' . $imagename, (string)$image);
         }
 
         $testimonial = new Testimonial();
@@ -55,10 +52,9 @@ class TestimonialController extends Controller
         $testimonial->image = $imagename;
         $testimonial->save();
 
-        Toastr::success('message', 'Testimonial created successfully.');
+        Toastr::success('Testimonial created successfully.');
         return redirect()->route('admin.testimonials.index');
     }
-
 
     public function edit($id)
     {
